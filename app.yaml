@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: tellmeall
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: gcr.io/s9-demo/tellmeall:latest
+            imagePullPolicy: Always
+            env:
+            - name: RELEASE
+              value: "v0.1.2"
