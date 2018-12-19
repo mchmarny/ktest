@@ -9,10 +9,10 @@ spec:
       revisionTemplate:
         metadata:
           annotations:
-          autoscaling.knative.dev/minScale: "1"
+            autoscaling.knative.dev/minScale: "1"
         spec:
           container:
-            image: gcr.io/s9-demo/tellmeall:latest
+            image: gcr.io/knative-samples/tellmeall:latest
             imagePullPolicy: Always
             env:
             - name: RELEASE

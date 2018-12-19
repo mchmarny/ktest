@@ -1,4 +1,4 @@
-GCP_PROJECT_NAME=s9-demo
+GCP_PROJECT_NAME=knative-samples
 BINARY_NAME=tellmeall
 
 all: test
