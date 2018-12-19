@@ -1,2 +1,3 @@
 # tellmeall
-App that prints everything
+
+App that prints everything (Host, URL, Proto, Headers, Env Vars etc.)
