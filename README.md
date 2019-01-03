@@ -20,8 +20,8 @@ The `tellmeall` application exposes a few endpoints
 * `/env` responds with all environment variables in a key/value format
 * `/head` responds with all request header variables in a key/value format
 * `/mem` responds with total, used and free system memory information
-* `/kn` responds with Knative-specific data as defined in the [Runtime Contract](https://github.com/knative/serving/blob/master/docs/runtime-contract.md)
 * `/host` responds with container info (ID, Hostname, OS, Boot-time etc.)
+* `/kn` WIP: responds with Knative-specific data as defined in the [Runtime Contract](https://github.com/knative/serving/blob/master/docs/runtime-contract.md)
 
 
 
