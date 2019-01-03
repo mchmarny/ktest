@@ -1,8 +1,13 @@
-FROM golang:1.11.3
+FROM golang:latest as build
+ENV GO111MODULE=on
+
 WORKDIR /go/src/github.com/mchmarny/tellmeall/
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -v -o app
+
+RUN go mod download
+
+RUN CGO_ENABLED=0 go build -o /server
 
 FROM scratch
-COPY --from=0 /go/src/github.com/mchmarny/tellmeall/app .
-ENTRYPOINT ["/app"]
+COPY --from=build /server /app/
+ENTRYPOINT ["/app/server"]

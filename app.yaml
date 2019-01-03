@@ -7,13 +7,10 @@ spec:
   runLatest:
     configuration:
       revisionTemplate:
-        metadata:
-          annotations:
-            autoscaling.knative.dev/minScale: "1"
         spec:
           container:
             image: gcr.io/knative-samples/tellmeall:latest
             imagePullPolicy: Always
             env:
             - name: RELEASE
-              value: "v0.1.2"
+              value: "v0.2.1"
