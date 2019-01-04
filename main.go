@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	logFilePath = "/tmp/tellmeall.log"
+	logFilePath = "/var/log/tellmeall.log"
 )
 
 func main() {
