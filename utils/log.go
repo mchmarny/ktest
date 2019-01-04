@@ -15,7 +15,7 @@ const (
 func ConfigureLogging() {
 
 	// log to file only if the LOG_TO_FILE var is set
-	if IsSet(logToFileFlag) {
+	if MustGetEnv(logToFileFlag, "") == "" {
 		log.Printf("%s not set, logging to stdout", logToFileFlag)
 		return
 	}
