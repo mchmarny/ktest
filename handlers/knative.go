@@ -1,64 +1,90 @@
 package handlers
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	"golang.org/x/sys/unix"
+
+	"github.com/mchmarny/tellmeall/types"
 )
 
 const (
-	runtimeContractURL = `Knative Runtime Contract:
-	https://github.com/knative/serving/blob/master/docs/runtime-contract.md`
+	runtimeContractURL = "https://github.com/knative/serving/blob/master/docs/runtime-contract.md"
 )
 
-func isDirRW(path string) string {
+func isDirRW(path string) *types.FsAccessInfo {
+
+	info := &types.FsAccessInfo{
+		Path:     path,
+		Expected: "R/W",
+	}
 
 	if unix.Access(path, unix.O_RDWR) == nil {
-		return "R/W (Success)"
+		info.Actual = "R/W"
+		info.Comment = "(Success)"
+		return info
 	}
 
 	if unix.Access(path, unix.O_RDONLY) == nil {
-		return "R/- (Failed: no write)"
+		info.Actual = "R/-"
+		info.Comment = "(Failed: no write)"
+		return info
 	}
 
 	if unix.Access(path, unix.O_WRONLY) == nil {
-		return "-/W (Failed: no read)"
+		info.Actual = "-/W"
+		info.Comment = "(Failed: no read)"
+		return info
 	}
 
-	return "-/- (Failed: neither)"
+	info.Actual = "-/-"
+	info.Comment = "(Failed: neither)"
+	return info
+
 }
 
 func knativeHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Knative...")
+	w.Header().Set("Content-Type", "application/json")
 
-	var request []string
+	k := &types.Knative{
+		Meta:    getMeta(r),
+		InfoURI: runtimeContractURL,
+		EnvVars: make(map[string]interface{}),
+		Access:  make([]*types.FsAccessGroup, 0),
+	}
 
-	request = append(request, runtimeContractURL)
-	request = append(request, "\n")
+	// env vars
+	k.EnvVars["PORT"] = os.Getenv("PORT")
+	k.EnvVars["K_SERVICE"] = os.Getenv("K_SERVICE")
+	k.EnvVars["K_REVISION"] = os.Getenv("K_REVISION")
+	k.EnvVars["K_CONFIGURATION"] = os.Getenv("K_CONFIGURATION")
 
-	request = append(request, "=== ENVIRONMENT VARIABLES ===")
-	request = append(request, fmt.Sprintf("   PORT:            %v", os.Getenv("PORT")))
-	request = append(request, fmt.Sprintf("   K_SERVICE:       %v", os.Getenv("K_SERVICE")))
-	request = append(request, fmt.Sprintf("   K_REVISION:      %v", os.Getenv("K_REVISION")))
-	request = append(request, fmt.Sprintf("   K_CONFIGURATION: %v", os.Getenv("K_CONFIGURATION")))
-	request = append(request, "\n")
+	fsg := &types.FsAccessGroup{
+		Group: "FILESYSTEM",
+		List: []*types.FsAccessInfo{
+			isDirRW("/tmp"),
+			isDirRW("/var/log"),
+			isDirRW("/dev/log"),
+		},
+	}
+	k.Access = append(k.Access, fsg)
 
-	request = append(request, "=== FILESYSTEM (Required R/W) ===")
-	request = append(request, fmt.Sprintf("/tmp     - %s", isDirRW("/tmp")))
-	request = append(request, fmt.Sprintf("/var/log - %s", isDirRW("/var/log")))
-	request = append(request, fmt.Sprintf("/dev/log - %s", isDirRW("/dev/log")))
-	request = append(request, "\n")
+	dnsg := &types.FsAccessGroup{
+		Group: "DNS",
+		List: []*types.FsAccessInfo{
+			isDirRW("/etc/hosts"),
+			isDirRW("/etc/hostname"),
+			isDirRW("/etc/resolv.conf"),
+		},
+	}
+	k.Access = append(k.Access, dnsg)
 
-	request = append(request, "=== DNS (Optional) ===")
-	request = append(request, fmt.Sprintf("/etc/hosts       - %s", isDirRW("/etc/hosts")))
-	request = append(request, fmt.Sprintf("/etc/hostname    - %s", isDirRW("/etc/hostname")))
-	request = append(request, fmt.Sprintf("/etc/resolv.conf - %s", isDirRW("/etc/resolv.conf")))
-	request = append(request, "\n")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(k)
 
-	fmt.Fprintf(w, strings.Join(request, "\n"))
 }
