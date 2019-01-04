@@ -17,6 +17,8 @@ func main() {
 	http.HandleFunc("/mem", handlers.MemoryHandler)
 	http.HandleFunc("/kn", handlers.KnativeHandler)
 	http.HandleFunc("/host", handlers.HostHandler)
+	http.HandleFunc("/log", handlers.LogHandler)
+	http.HandleFunc("/help", handlers.HelpHandler)
 
 	// server
 	port := handlers.GetPort()

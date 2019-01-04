@@ -21,7 +21,9 @@ The `tellmeall` application exposes a few endpoints
 * `/head` responds with all request header variables in a key/value format
 * `/mem` responds with total, used and free system memory information
 * `/host` responds with container info (ID, Hostname, OS, Boot-time etc.)
+* `/log` responds with content of specific log (e.g. /log?logpath=/var/log/app.log)
 * `/kn` WIP: responds with Knative-specific data as defined in the [Runtime Contract](https://github.com/knative/serving/blob/master/docs/runtime-contract.md)
+* `/help` responds with this list of endpoints as URLs
 
 
 
