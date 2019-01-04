@@ -13,6 +13,7 @@ func main() {
 
 	// log
 	utils.ConfigureLogging()
+	defer utils.FinalizeLogging()
 
 	// mux
 	mux := http.NewServeMux()
