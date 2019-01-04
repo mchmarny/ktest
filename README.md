@@ -24,7 +24,7 @@ After deployment, the `tellmeall` application will expose the following endpoint
 * `/_health` Responds with 'OK' (ala health check)
 
 
-## Endpoints
+## Endpoint How-to
 
 The JSON outputting endpoints (`/kn`, `/req`, `/node`) include request metadata object. This provides context for each response and is useful when persisting returned data for evaluation/texting.
 
