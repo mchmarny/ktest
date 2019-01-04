@@ -1,0 +1,56 @@
+{{ define "home" }}
+
+{{ template "header" . }}
+
+
+<div id="middle-section">
+
+    <table>
+
+        <tr>
+            <td class='link'><a href='/kn'>/kn</a></td>
+            <td>Knative-specific data as defined in the
+                <a href='https://github.com/knative/serving/blob/master/docs/runtime-contract.md'>
+                    Runtime Contract
+                </a>
+            </td>
+        </tr>
+
+        <tr>
+            <td class='link'><a href='/env'>/env</a></td>
+            <td>All environment variables in a key/value format</td>
+        </tr>
+
+        <tr>
+            <td class='link'><a href='/head'>/head</a></td>
+            <td>All request header variables in a key/value format</td>
+
+        <tr>
+            <td class='link'><a href='/mem'>/mem</a></td>
+            <td>Total, used and free system memory information</td>
+        </tr>
+
+        <tr>
+            <td class='link'><a href='/host'>/host</a></td>
+            <td>Serving node info (ID, Hostname, OS, Boot-time etc.)</td>
+
+        <tr>
+            <td class='link'><a href='/log'>/log</a></td>
+            <td>Content of specific log or log list in dir (e.g.
+                <a href='/log?logpath=/var/log/app.log'>tellmeall logs</a>)
+            </td>
+        </tr>
+
+        <tr>
+            <td class='link'><a href='/_healthz'>/_health</a></td>
+            <td>Responds with 'OK' (ala health check)</td>
+        </tr>
+
+
+    </table>
+
+</div>
+
+{{ template "footer" . }}
+
+{{ end }}

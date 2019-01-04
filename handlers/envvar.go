@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func EnvVarHandler(w http.ResponseWriter, r *http.Request) {
+func envVarHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling EnvVars...")
 

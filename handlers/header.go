@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func HeaderHandler(w http.ResponseWriter, r *http.Request) {
+func headerHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Headers...")
 

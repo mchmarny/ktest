@@ -1,19 +1,20 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 
-	log.Println("Handling Home...")
+	data := map[string]string{
+		"name": "tellmeall",
+		"on":   time.Now().String(),
+	}
 
-	// header
-	w.Header().Set("Service", "tellmeall")
-	w.WriteHeader(200)
+	if err := templates.ExecuteTemplate(w, "home", data); err != nil {
+		log.Printf("Error in home template: %s", err)
+	}
 
-	// content
-	fmt.Fprintf(w, "OK")
 }

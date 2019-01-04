@@ -9,7 +9,7 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
-func MemoryHandler(w http.ResponseWriter, r *http.Request) {
+func memoryHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Memory...")
 

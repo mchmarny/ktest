@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	defaultPort        = "8080"
-	runtimeContractURL = "Runtime Contract: https://github.com/knative/serving/blob/master/docs/runtime-contract.md"
+	runtimeContractURL = `Knative Runtime Contract:
+	https://github.com/knative/serving/blob/master/docs/runtime-contract.md`
 )
 
 func isDirRW(path string) string {
@@ -32,15 +32,7 @@ func isDirRW(path string) string {
 	return "-/- (Failed: neither)"
 }
 
-func GetPort() string {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
-	return port
-}
-
-func KnativeHandler(w http.ResponseWriter, r *http.Request) {
+func knativeHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Knative...")
 
@@ -50,7 +42,7 @@ func KnativeHandler(w http.ResponseWriter, r *http.Request) {
 	request = append(request, "\n")
 
 	request = append(request, "=== ENVIRONMENT VARIABLES ===")
-	request = append(request, fmt.Sprintf("   PORT: %v", GetPort()))
+	request = append(request, fmt.Sprintf("   PORT:            %v", os.Getenv("PORT")))
 	request = append(request, fmt.Sprintf("   K_SERVICE:       %v", os.Getenv("K_SERVICE")))
 	request = append(request, fmt.Sprintf("   K_REVISION:      %v", os.Getenv("K_REVISION")))
 	request = append(request, fmt.Sprintf("   K_CONFIGURATION: %v", os.Getenv("K_CONFIGURATION")))

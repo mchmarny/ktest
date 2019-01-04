@@ -10,7 +10,7 @@ import (
 	"github.com/shirou/gopsutil/host"
 )
 
-func HostHandler(w http.ResponseWriter, r *http.Request) {
+func hostHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Host...")
 

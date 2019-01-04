@@ -39,7 +39,7 @@ func getSizeInKB(size int64) int64 {
 	return fileSize
 }
 
-func LogHandler(w http.ResponseWriter, r *http.Request) {
+func logHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Log...")
 
