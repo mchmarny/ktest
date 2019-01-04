@@ -2,12 +2,15 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
 )
 
 func EnvVarHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling EnvVars...")
 
 	var request []string
 

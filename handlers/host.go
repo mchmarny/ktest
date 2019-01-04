@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -10,6 +11,8 @@ import (
 )
 
 func HostHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling Host...")
 
 	var request []string
 

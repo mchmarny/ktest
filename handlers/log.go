@@ -41,6 +41,8 @@ func getSizeInKB(size int64) int64 {
 
 func LogHandler(w http.ResponseWriter, r *http.Request) {
 
+	log.Println("Handling Log...")
+
 	// gt log path
 	path := r.URL.Query().Get("logpath")
 	if path == "" {

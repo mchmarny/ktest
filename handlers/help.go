@@ -2,10 +2,13 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
 func HelpHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling Help...")
 
 	// header
 	w.Header().Set("Service", "tellmeall")

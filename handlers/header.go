@@ -2,11 +2,14 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
 
 func HeaderHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling Headers...")
 
 	var request []string
 

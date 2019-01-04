@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -40,6 +41,8 @@ func GetPort() string {
 }
 
 func KnativeHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling Knative...")
 
 	var request []string
 

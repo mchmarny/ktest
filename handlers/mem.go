@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -9,6 +10,8 @@ import (
 )
 
 func MemoryHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Handling Memory...")
 
 	var request []string
 
