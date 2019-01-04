@@ -8,7 +8,7 @@ import (
 const (
 	logFilePath   = "/var/log/tellmeall.log"
 	logToFileFlag = "LOG_TO_FILE"
-	logPrefix     = "tellmeall"
+	logPrefix     = "tellmeall: "
 )
 
 var (

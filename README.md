@@ -83,3 +83,10 @@ The `/log` endpoint returns the log file specified by the `logpath` parameter in
 > Note, `tellmeall` by default writes logs to `stdout` unless the `LOG_TO_FILE` environment variable is set (anything other than "" will do). If that variable is set, `tellmeall` will output its own logs to `/var/log/tellmeall.log`
 
 > Note, currently the `/log` endpoint will not return any logs larger than `1MB`.
+
+To search log you can pipe the `/log` output through `greb`. For example to find out the `port` on which the server started
+
+```shell
+curl -s https://tellmeall.default.knative.tech/log?logpath=/var/log/tellmeall.log \
+  | grep 'Server starting on port'
+```
