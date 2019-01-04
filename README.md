@@ -18,10 +18,8 @@ After deployment, the `tellmeall` application will expose the following endpoint
 
 * `/` Landing page with links to this endpoints
 * `/kn` Knative-specific data as defined in the [Runtime Contract](https://github.com/knative/serving/blob/master/docs/runtime-contract.md)
-* `/env` All environment variables in a key/value format
-* `/head` All request header variables in a key/value format
-* `/host` Serving node info (ID, Hostname, OS, Boot-time etc.)
-* `/mem` Total, used and free system memory information
+* `/req` Request context with environment variables and headers
+* `/node` Serving node info (ID, Hostname, OS, Boot-time, Memory etc.)
 * `/log` Content of specific log or log list in dir (e.g. /log?logpath=/var/log/app.log)
 * `/_health` Responds with 'OK' (ala health check)
 

@@ -6,6 +6,10 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	"time"
+
+	"github.com/mchmarny/tellmeall/types"
+	"github.com/mchmarny/tellmeall/utils"
 )
 
 var (
@@ -28,11 +32,9 @@ func InitHandlers(mux *http.ServeMux) {
 
 	// routes
 	mux.HandleFunc("/", withLog(homeHandler))
-	mux.HandleFunc("/env", withLog(envVarHandler))
-	mux.HandleFunc("/head", withLog(headerHandler))
-	mux.HandleFunc("/mem", withLog(memoryHandler))
+	mux.HandleFunc("/req", withLog(requestHandler))
+	mux.HandleFunc("/node", withLog(nodeHandler))
 	mux.HandleFunc("/kn", withLog(knativeHandler))
-	mux.HandleFunc("/host", withLog(hostHandler))
 	mux.HandleFunc("/log", withLog(logHandler))
 
 	// health (Istio and other)
@@ -57,5 +59,15 @@ func withLog(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		next.ServeHTTP(w, r)
+	}
+}
+
+func getMeta(r *http.Request) *types.RequestMetadata {
+	return &types.RequestMetadata{
+		ID:     utils.NewID(),
+		Ts:     time.Now(),
+		URI:    r.RequestURI,
+		Host:   r.Host,
+		Method: r.Method,
 	}
 }

@@ -5,6 +5,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.4.7 // indirect
 	github.com/go-ole/go-ole v1.2.2 // indirect
+	github.com/google/uuid v1.1.0
 	github.com/hpcloud/tail v1.0.0
 	github.com/mchmarny/gauther v0.2.1
 	github.com/pmezard/go-difflib v1.0.0 // indirect
