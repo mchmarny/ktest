@@ -13,6 +13,6 @@ spec:
             imagePullPolicy: Always
             env:
             - name: RELEASE
-              value: "v0.3.3"
+              value: "v0.3.4"
             - name: LOG_TO_FILE
               value: "yes"
