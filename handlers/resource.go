@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/mchmarny/tellmeall/utils"
 	"log"
 	"net/http"
 	"time"
@@ -71,7 +72,7 @@ func resourceHandler(w http.ResponseWriter, r *http.Request) {
 	// pod
 	val, ctx := getResourceLimit(limitMemResourceFile)
 	sr.Pod.Limits.Memory.Value = val
-	sr.Pod.Limits.Memory.Context = ctx
+	sr.Pod.Limits.Memory.Context = fmt.Sprintf("%s; %s", ctx, utils.ByteSize(uint64(val)))
 
 	quotaVal, quotaCtx := getResourceLimit(limitCPUQuotaResourceFile)
 	periodVal, _ := getResourceLimit(limitCPUPeriodResourceFile)
