@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -84,7 +83,6 @@ func knativeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	k.Access = append(k.Access, dnsg)
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(k)
+	writeJSON(w, k)
 
 }

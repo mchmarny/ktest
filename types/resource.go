@@ -4,32 +4,36 @@ import (
 	"time"
 )
 
-// SimpleNode represents simple request
-type SimpleNode struct {
-	Meta *RequestMetadata `json:"meta"`
-	Info *SimpleNodeInfo  `json:"info"`
+// SimpleResource represents simple resource
+type SimpleResource struct {
+	Meta *RequestMetadata `json:"meta,omitempty"`
+	Node *SimpleNodeInfo  `json:"node,omitempty"`
+	Pod  *SimplePodInfo   `json:"pod,omitempty"`
 }
 
 // SimpleNodeInfo represents host info data
 type SimpleNodeInfo struct {
-	ID       string        `json:"hostId"`
-	BootTime time.Time     `json:"bootTs"`
-	OS       string        `json:"os"`
-	Hostname string        `json:"hostname"`
-	Memory   *SimpleMemory `json:"mem"`
-	Core     *SimpleCore   `json:"core"`
+	ID        string              `json:"hostId,omitempty"`
+	BootTime  time.Time           `json:"bootTs,omitempty"`
+	OS        string              `json:"os,omitempty"`
+	Resources *SimpleResourceInfo `json:"resources,omitempty"`
 }
 
-// SimpleMemory represents node memory
-type SimpleMemory struct {
-	Total       uint64  `json:"total"`
-	TotalStr    string  `json:"totalStr"`
-	Free        uint64  `json:"free"`
-	UsedPercent float64 `json:"usedPercent"`
-	UsedUnit    string  `json:"usedUnit"`
+// SimplePodInfo represents pod info
+type SimplePodInfo struct {
+	Hostname string              `json:"hostname,omitempty"`
+	Limits   *SimpleResourceInfo `json:"limits,omitempty"`
+	Current  *SimpleResourceInfo `json:"current,omitempty"`
 }
 
-// SimpleCore represents node cpu
-type SimpleCore struct {
-	Total int `json:"total"`
+// SimpleResourceInfo represents node cpu
+type SimpleResourceInfo struct {
+	Memory *SimpleIntMeasurement `json:"memory,omitempty"`
+	CPU    *SimpleIntMeasurement `json:"cpu,omitempty"`
+}
+
+//SimpleIntMeasurement represents int measurement
+type SimpleIntMeasurement struct {
+	Value   int64  `json:"value,omitempty"`
+	Context string `json:"context,omitempty"`
 }

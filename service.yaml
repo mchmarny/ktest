@@ -7,22 +7,19 @@ spec:
   runLatest:
     configuration:
       revisionTemplate:
-        metadata:
-          annotations:
-            autoscaling.knative.dev/minScale: "1"
         spec:
           container:
             image: gcr.io/knative-samples/tellmeall:latest
             imagePullPolicy: Always
-            env:
-            - name: RELEASE
-              value: "v0.3.8"
-            - name: LOG_TO_FILE
-              value: "yes"
             resources:
               requests:
-                memory: "64Mi"
-                cpu: "1"
+                memory: "500M"
+                cpu: "0.5"
               limits:
-                memory: "256Mi"
-                cpu: "2"
+                memory: "1Gi"
+                cpu: "1.5"
+            env:
+            - name: RELEASE
+              value: "v0.3.10"
+            - name: LOG_TO_FILE
+              value: "yes"

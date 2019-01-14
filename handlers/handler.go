@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -70,4 +71,15 @@ func getMeta(r *http.Request) *types.RequestMetadata {
 		Host:   r.Host,
 		Method: r.Method,
 	}
+}
+
+// WriteObject write content to response
+func writeJSON(w http.ResponseWriter, o interface{}) {
+
+	w.WriteHeader(http.StatusOK)
+	e := json.NewEncoder(w)
+	e.SetEscapeHTML(true)
+	e.SetIndent("", "\t")
+	e.Encode(o)
+
 }
