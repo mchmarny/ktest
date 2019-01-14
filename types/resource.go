@@ -23,7 +23,6 @@ type SimpleNodeInfo struct {
 type SimplePodInfo struct {
 	Hostname string              `json:"hostname,omitempty"`
 	Limits   *SimpleResourceInfo `json:"limits,omitempty"`
-	Current  *SimpleResourceInfo `json:"current,omitempty"`
 }
 
 // SimpleResourceInfo represents node cpu
@@ -34,6 +33,6 @@ type SimpleResourceInfo struct {
 
 //SimpleIntMeasurement represents int measurement
 type SimpleIntMeasurement struct {
-	Value   int64  `json:"value,omitempty"`
-	Context string `json:"context,omitempty"`
+	Value   float64 `json:"value,omitempty"`
+	Context string  `json:"context,omitempty"`
 }
