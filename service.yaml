@@ -19,3 +19,10 @@ spec:
               value: "v0.3.8"
             - name: LOG_TO_FILE
               value: "yes"
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "1"
+              limits:
+                memory: "256Mi"
+                cpu: "2"

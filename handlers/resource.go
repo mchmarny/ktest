@@ -26,6 +26,7 @@ func resourceHandler(w http.ResponseWriter, r *http.Request) {
 		Meta: getMeta(r),
 		Info: &types.SimpleNodeInfo{
 			Memory: &types.SimpleMemory{},
+			Core: &types.SimpleCore{},
 		},
 	}
 
