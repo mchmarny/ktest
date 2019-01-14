@@ -15,7 +15,7 @@ image:
 		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):latest .
 
 deploy:
-	kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/app.yaml
+	kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/service.yaml
 
 deploy-local:
 	kubectl apply -f app.yaml

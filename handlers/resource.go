@@ -62,13 +62,13 @@ func resourceHandler(w http.ResponseWriter, r *http.Request) {
 	vm, err := mem.VirtualMemory()
 	if err == nil {
 		sr.Node.Resources.Memory.Value = int64(vm.Total)
-		sr.Node.Resources.Memory.Context = "ps"
+		sr.Node.Resources.Memory.Context = "Source: OS process status"
 	}
 
 	count, err := cpu.Counts(true)
 	if err == nil {
 		sr.Node.Resources.CPU.Value = int64(count)
-		sr.Node.Resources.CPU.Context = "ps"
+		sr.Node.Resources.CPU.Context = "Source: OS process status"
 	}
 
 	// pod
