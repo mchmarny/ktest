@@ -33,7 +33,7 @@ func InitHandlers(mux *http.ServeMux) {
 	// routes
 	mux.HandleFunc("/", withLog(homeHandler))
 	mux.HandleFunc("/req", withLog(requestHandler))
-	mux.HandleFunc("/node", withLog(nodeHandler))
+	mux.HandleFunc("/res", withLog(resourceHandler))
 	mux.HandleFunc("/kn", withLog(knativeHandler))
 	mux.HandleFunc("/log", withLog(logHandler))
 

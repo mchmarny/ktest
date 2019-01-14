@@ -20,9 +20,8 @@ var (
 func ConfigureLogging() {
 
 	// log to file only if the LOG_TO_FILE var is set
-	if MustGetEnv(logToFileFlag, "") == "" {
-		log.Printf("%s not set, logging to stdout", logToFileFlag)
-		return
+	if os.Getenv(logToFileFlag) != "" {
+		log.Printf("%s set, logging to file: %s", logToFileFlag, logFilePath)
 	}
 
 	logFile, err = os.OpenFile(logFilePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)

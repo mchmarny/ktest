@@ -17,11 +17,19 @@ type SimpleNodeInfo struct {
 	OS       string        `json:"os"`
 	Hostname string        `json:"hostname"`
 	Memory   *SimpleMemory `json:"mem"`
+	Core     *SimpleCore   `json:"core"`
 }
 
 // SimpleMemory represents node memory
 type SimpleMemory struct {
 	Total       uint64  `json:"total"`
+	TotalStr    string  `json:"totalStr"`
 	Free        uint64  `json:"free"`
 	UsedPercent float64 `json:"usedPercent"`
+	UsedUnit    string  `json:"usedUnit"`
+}
+
+// SimpleCore represents node cpu
+type SimpleCore struct {
+	Total int `json:"total"`
 }

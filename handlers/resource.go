@@ -8,14 +8,17 @@ import (
 
 	"github.com/shirou/gopsutil/mem"
 
+	"github.com/shirou/gopsutil/cpu"
+
 	"github.com/shirou/gopsutil/host"
 
 	"github.com/mchmarny/tellmeall/types"
+	"github.com/mchmarny/tellmeall/utils"
 )
 
-func nodeHandler(w http.ResponseWriter, r *http.Request) {
+func resourceHandler(w http.ResponseWriter, r *http.Request) {
 
-	log.Println("Handling Node...")
+	log.Println("Handling Resource...")
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -29,8 +32,15 @@ func nodeHandler(w http.ResponseWriter, r *http.Request) {
 	vm, err := mem.VirtualMemory()
 	if err == nil {
 		sr.Info.Memory.Total = vm.Total
+		sr.Info.Memory.TotalStr = utils.ByteSize(vm.Total)
 		sr.Info.Memory.Free = vm.Free
 		sr.Info.Memory.UsedPercent = vm.UsedPercent
+		sr.Info.Memory.UsedUnit = "%"
+	}
+
+	count, err := cpu.Counts(true)
+	if err == nil {
+		sr.Info.Core.Total = count
 	}
 
 	info, err := host.Info()
