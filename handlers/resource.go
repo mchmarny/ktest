@@ -19,6 +19,8 @@ import (
 	"github.com/mchmarny/tellmeall/utils"
 
 	"golang.org/x/sys/unix"
+
+	"github.com/jaypipes/ghw"
 )
 
 const (
@@ -30,51 +32,34 @@ const (
 func resourceHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Handling Resource...")
-
 	w.Header().Set("Content-Type", "application/json")
 
 	sr := &types.SimpleResource{
 		Meta: getMeta(r),
-		Node: &types.SimpleNodeInfo{
-			Resources: &types.SimpleResourceInfo{
-				Memory: &types.SimpleIntMeasurement{},
-				CPU: &types.SimpleIntMeasurement{},
-			},
-		},
-		Pod: &types.SimplePodInfo{
-			Limits:   &types.SimpleResourceInfo{
-				Memory: &types.SimpleIntMeasurement{},
-				CPU: &types.SimpleIntMeasurement{},
-			},
-		},
+		Node: getNodeInfo(),
+		Pod: getPodInfo(),
 	}
 
+	printGPUInfo()
+
+	writeJSON(w, sr)
+
+}
+
+func getPodInfo() *types.SimplePodInfo {
+
+	pod := types.NewPodInfo()
+
+	// host
 	info, err := host.Info()
 	if err == nil {
-		sr.Node.ID = info.HostID
-		sr.Node.BootTime = time.Unix(int64(info.BootTime), 0)
-		sr.Node.OS = info.OS
-		sr.Pod.Hostname = info.Hostname
-	}
-
-
-	vm, err := mem.VirtualMemory()
-	if err == nil {
-		sr.Node.Resources.Memory.Value = float64(vm.Total)
-		sr.Node.Resources.Memory.Context = fmt.Sprintf("Source: OS process status, Size: %s",
-			utils.ByteSize(vm.Total))
-	}
-
-	count, err := cpu.Counts(true)
-	if err == nil {
-		sr.Node.Resources.CPU.Value = float64(count)
-		sr.Node.Resources.CPU.Context = "Source: OS process status"
+		pod.Hostname = info.Hostname
 	}
 
 	// pod memory
 	val, wr, ctx := getCGroupsFile(limitMemResourceFile)
-	sr.Pod.Limits.Memory.Value = val
-	sr.Pod.Limits.Memory.Context = fmt.Sprintf("%s, Writable: %v, Size: %s", ctx, wr,
+	pod.Limits.Memory.Value = val
+	pod.Limits.Memory.Context = fmt.Sprintf("%s, Writable: %v, Size: %s", ctx, wr,
 		utils.ByteSize(uint64(val)))
 
 	// pod cpu (calculated: quota / period)
@@ -82,17 +67,49 @@ func resourceHandler(w http.ResponseWriter, r *http.Request) {
 	periodVal, _, _ := getCGroupsFile(limitCPUPeriodResourceFile)
 
 	// always context
-	sr.Pod.Limits.CPU.Context = fmt.Sprintf("%s, Writable: %v", quotaCtx, wr)
+	pod.Limits.CPU.Context = fmt.Sprintf("%s, Writable: %v", quotaCtx, wr)
 
 	// value only if there is data
 	if quotaVal > 0 && periodVal > 0 {
-		sr.Pod.Limits.CPU.Value = quotaVal / periodVal
+		pod.Limits.CPU.Value = quotaVal / periodVal
 	}
 
-	writeJSON(w, sr)
+	return pod
 
 }
 
+
+
+func getNodeInfo() *types.SimpleNodeInfo {
+
+	node := types.NewNodeInfo()
+
+	// host
+	info, err := host.Info()
+	if err == nil {
+		node.ID = info.HostID
+		node.BootTime = time.Unix(int64(info.BootTime), 0)
+		node.OS = info.OS
+	}
+
+	// vm
+	vm, err := mem.VirtualMemory()
+	if err == nil {
+		node.Resources.Memory.Value = float64(vm.Total)
+		node.Resources.Memory.Context = fmt.Sprintf("Source: OS process status, Size: %s",
+			utils.ByteSize(vm.Total))
+	}
+
+	// cpu
+	count, err := cpu.Counts(true)
+	if err == nil {
+		node.Resources.CPU.Value = float64(count)
+		node.Resources.CPU.Context = "Source: OS process status"
+	}
+
+	return node
+
+}
 
 
 
@@ -127,4 +144,20 @@ func getCGroupsFile(path string) (val float64, wr bool, info string) {
 
 	return ic, unix.Access(path, unix.W_OK) == nil, fmt.Sprintf("Source: %s", path)
 
+}
+
+
+func printGPUInfo() {
+
+	gpu, err := ghw.GPU()
+	if err != nil {
+		log.Printf("Error getting GPU info: %v", err)
+		return
+	}
+
+	log.Printf("%v\n", gpu)
+
+	for _, card := range gpu.GraphicsCards {
+		log.Printf(" %v\n", card)
+	}
 }

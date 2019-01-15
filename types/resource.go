@@ -4,6 +4,26 @@ import (
 	"time"
 )
 
+// NewPodInfo returns fully hydrated pod
+func NewPodInfo() *SimplePodInfo {
+	return &SimplePodInfo{
+		Limits: &SimpleResourceInfo{
+			Memory: &SimpleIntMeasurement{},
+			CPU:    &SimpleIntMeasurement{},
+		},
+	}
+}
+
+// NewNodeInfo returns fully hydrated node
+func NewNodeInfo() *SimpleNodeInfo {
+	return &SimpleNodeInfo{
+		Resources: &SimpleResourceInfo{
+			Memory: &SimpleIntMeasurement{},
+			CPU:    &SimpleIntMeasurement{},
+		},
+	}
+}
+
 // SimpleResource represents simple resource
 type SimpleResource struct {
 	Meta *RequestMetadata `json:"meta,omitempty"`

@@ -11,7 +11,7 @@ https://tellmeall.default.knative.tech/
 ## Deploy
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/service.yaml
+kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/deployments/tellmeall.yaml
 ```
 
 After deployment, the `tellmeall` application will expose the following endpoints:

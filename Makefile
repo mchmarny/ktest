@@ -14,8 +14,13 @@ image:
 		--project=$(GCP_PROJECT_NAME) \
 		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):latest .
 
-deploy:
-	kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/service.yaml
+image-test:
+	gcloud builds submit \
+		--project=$(GCP_PROJECT_NAME) \
+		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):test .
 
-deploy-local:
-	kubectl apply -f app.yaml
+deploy:
+	kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/deployments/tellmeall.yaml
+
+deploy-test:
+	kubectl apply -f deployments/tellmeall-test.yaml

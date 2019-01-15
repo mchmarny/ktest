@@ -1,0 +1,26 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: tellmeall-test
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: gcr.io/knative-samples/tellmeall:test
+            imagePullPolicy: Always
+            resources:
+              requests:
+                memory: "500M"
+                cpu: "0.5"
+              limits:
+                memory: "1Gi"
+                cpu: "1.5"
+                nvidia.com/gpu: 1
+            env:
+            - name: RELEASE
+              value: "v0.5.3"
+            - name: LOG_TO_FILE
+              value: "yes"
