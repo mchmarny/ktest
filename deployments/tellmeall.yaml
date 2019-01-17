@@ -2,7 +2,7 @@ apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
   name: tellmeall
-  namespace: default
+  namespace: demo
 spec:
   runLatest:
     configuration:
@@ -17,10 +17,10 @@ spec:
                 cpu: "0.5"
               limits:
                 memory: "1Gi"
-                cpu: "1.5"
-                nvidia.com/gpu: 1
+                cpu: "1"
+                # nvidia.com/gpu: 1
             env:
             - name: RELEASE
-              value: "v0.5.12"
+              value: "v0.5.20"
             - name: LOG_TO_FILE
               value: "yes"

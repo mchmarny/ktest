@@ -6,7 +6,7 @@ Simple test app for Knative deployments
 
 ## Demo
 
-https://tellmeall.default.knative.tech/
+https://tellmeall.demo.knative.tech/
 
 ## Deploy
 
@@ -26,7 +26,7 @@ After deployment, the `tellmeall` application will expose the following endpoint
 
 ## Endpoint How-to
 
-The JSON outputting endpoints (`/kn`, `/req`, `/node`) include request metadata object. This provides context for each response and is useful when persisting returned data for evaluation/texting.
+The JSON outputting endpoints (`/kn`, `/req`, `/res`) include request metadata object. This provides context for each response and is useful when persisting returned data for evaluation/texting.
 
 ```json
 {
@@ -34,7 +34,7 @@ The JSON outputting endpoints (`/kn`, `/req`, `/node`) include request metadata 
         "id": "215bb44e-0513-44a5-a640-fc1546daf294",
         "ts": "2019-01-04T20:09:12.52097224Z",
         "uri": "/req",
-        "host": "tellmeall.default.knative.tech",
+        "host": "tellmeall.demo.knative.tech",
         "method": "GET"
     },
     ...
@@ -45,13 +45,13 @@ The JSON outputting endpoints (`/kn`, `/req`, `/node`) include request metadata 
 The `/req` endpoint provides an easy way to eval expected environment variables or headers for your requests. For example to get a release version of the `tellmeall1` app you would execute:
 
 ```shell
-curl -s https://tellmeall.default.knative.tech/req |  jq '.envs.RELEASE'
+curl -s https://tellmeall.demo.knative.tech/req |  jq '.envs.RELEASE'
 ```
 
 Or to get your `user-agent` as seen by the Knative service
 
 ```shell
-curl -s https://tellmeall.default.knative.tech/req |  jq '.envs.user-agent'
+curl -s https://tellmeall.demo.knative.tech/req |  jq '.envs.user-agent'
 ```
 
 ### `/node` (Serving Node)
@@ -59,7 +59,7 @@ curl -s https://tellmeall.default.knative.tech/req |  jq '.envs.user-agent'
 The `/node` endpoint provides information about the node which is serving your request. For example to see the boot time of that node and its hostname
 
 ```shell
-curl -s https://tellmeall.default.knative.tech/node |  jq '.info.bootTs,.info.hostname'
+curl -s https://tellmeall.demo.knative.tech/node |  jq '.info.bootTs,.info.hostname'
 ```
 
 ### `/kn` (Knative)
@@ -69,7 +69,7 @@ The `/kn` endpoint is what you would use to evaluate [Knative-specific data](htt
 To test for example if the `/etc/hosts` has the required `R/W` permissions you can run this query. It searches for `comment` in the returned document where `access` group `name == "DNS"` and and the item within that group has the `path == /etc/hosts`
 
 ```shell
-curl -s https://tellmeall.default.knative.tech/kn \
+curl -s https://tellmeall.demo.knative.tech/kn \
   | jq -r --arg group "DNS" \
     '.access[] | if .group == $group then . else empty end' \
     | jq -r --arg path "/etc/hosts" \
@@ -78,7 +78,7 @@ curl -s https://tellmeall.default.knative.tech/kn \
 
 ### `/log`
 
-The `/log` endpoint returns the log file specified by the `logpath` parameter in query string. ((e.g. [/log?logpath=/var/log/tellmeall.log](https://tellmeall.default.knative.tech/log?logpath=/var/log/tellmeall.log))). If the `logpath` parameter is a directly the `/log` will return a list of content in that directory.
+The `/log` endpoint returns the log file specified by the `logpath` parameter in query string. ((e.g. [/log?logpath=/var/log/tellmeall.log](https://tellmeall.demo.knative.tech/log?logpath=/var/log/tellmeall.log))). If the `logpath` parameter is a directly the `/log` will return a list of content in that directory.
 
 > Note, `tellmeall` by default writes logs to `stdout` unless the `LOG_TO_FILE` environment variable is set (anything other than "" will do). If that variable is set, `tellmeall` will output its own logs to `/var/log/tellmeall.log`
 
@@ -87,6 +87,6 @@ The `/log` endpoint returns the log file specified by the `logpath` parameter in
 To search log you can pipe the `/log` output through `greb`. For example to find out the `port` on which the server started
 
 ```shell
-curl -s https://tellmeall.default.knative.tech/log?logpath=/var/log/tellmeall.log \
+curl -s https://tellmeall.demo.knative.tech/log?logpath=/var/log/tellmeall.log \
   | grep 'Server starting on port'
 ```

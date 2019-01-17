@@ -166,17 +166,10 @@ func getGPUInfo() (val int, info string) {
 	num := len(gpu.GraphicsCards)
 	infos := make([]string, 0)
 
-	/*
-		device[0]: 0000:00:04.0 ->
-			class: 'Display controller'
-			vendor: 'NVIDIA Corporation'
-			product: 'GP100GL [Tesla P100 PCIe 16GB]'"
-	*/
-
 	for _, card := range gpu.GraphicsCards {
 		log.Printf(" %v\n", card)
-		infos = append(infos, fmt.Sprintf("gpu[%d]: %s - %+v",
-			card.Index, card.DeviceInfo.Vendor.Name, card.DeviceInfo.Product))
+		infos = append(infos, fmt.Sprintf("gpu[%d]: %s - %s",
+			card.Index, card.DeviceInfo.Vendor.Name, card.DeviceInfo.Product.Name))
 	}
 
 	return num, strings.Join(infos, "; ")
