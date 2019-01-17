@@ -8,8 +8,8 @@ import (
 func NewPodInfo() *SimplePodInfo {
 	return &SimplePodInfo{
 		Limits: &SimpleResourceInfo{
-			Memory: &SimpleIntMeasurement{},
-			CPU:    &SimpleIntMeasurement{},
+			RAM: &SimpleMeasurement{},
+			CPU: &SimpleMeasurement{},
 		},
 	}
 }
@@ -18,8 +18,8 @@ func NewPodInfo() *SimplePodInfo {
 func NewNodeInfo() *SimpleNodeInfo {
 	return &SimpleNodeInfo{
 		Resources: &SimpleResourceInfo{
-			Memory: &SimpleIntMeasurement{},
-			CPU:    &SimpleIntMeasurement{},
+			RAM: &SimpleMeasurement{},
+			CPU: &SimpleMeasurement{},
 		},
 	}
 }
@@ -47,12 +47,13 @@ type SimplePodInfo struct {
 
 // SimpleResourceInfo represents node cpu
 type SimpleResourceInfo struct {
-	Memory *SimpleIntMeasurement `json:"memory,omitempty"`
-	CPU    *SimpleIntMeasurement `json:"cpu,omitempty"`
+	RAM *SimpleMeasurement `json:"ram,omitempty"`
+	CPU *SimpleMeasurement `json:"cpu,omitempty"`
+	GPU *SimpleMeasurement `json:"gpu,omitempty"`
 }
 
-//SimpleIntMeasurement represents int measurement
-type SimpleIntMeasurement struct {
+//SimpleMeasurement represents int measurement
+type SimpleMeasurement struct {
 	Value   float64 `json:"value,omitempty"`
 	Context string  `json:"context,omitempty"`
 }

@@ -40,8 +40,6 @@ func resourceHandler(w http.ResponseWriter, r *http.Request) {
 		Pod: getPodInfo(),
 	}
 
-	printGPUInfo()
-
 	writeJSON(w, sr)
 
 }
@@ -58,8 +56,8 @@ func getPodInfo() *types.SimplePodInfo {
 
 	// pod memory
 	val, wr, ctx := getCGroupsFile(limitMemResourceFile)
-	pod.Limits.Memory.Value = val
-	pod.Limits.Memory.Context = fmt.Sprintf("%s, Writable: %v, Size: %s", ctx, wr,
+	pod.Limits.RAM.Value = val
+	pod.Limits.RAM.Context = fmt.Sprintf("%s, Writable: %v, Size: %s", ctx, wr,
 		utils.ByteSize(uint64(val)))
 
 	// pod cpu (calculated: quota / period)
@@ -75,9 +73,7 @@ func getPodInfo() *types.SimplePodInfo {
 	}
 
 	return pod
-
 }
-
 
 
 func getNodeInfo() *types.SimpleNodeInfo {
@@ -95,8 +91,9 @@ func getNodeInfo() *types.SimpleNodeInfo {
 	// vm
 	vm, err := mem.VirtualMemory()
 	if err == nil {
-		node.Resources.Memory.Value = float64(vm.Total)
-		node.Resources.Memory.Context = fmt.Sprintf("Source: OS process status, Size: %s",
+		node.Resources.RAM.Value = float64(vm.Total)
+		node.Resources.RAM.Context = fmt.Sprintf(
+			"Source: OS process status, Size: %s",
 			utils.ByteSize(vm.Total))
 	}
 
@@ -105,6 +102,15 @@ func getNodeInfo() *types.SimpleNodeInfo {
 	if err == nil {
 		node.Resources.CPU.Value = float64(count)
 		node.Resources.CPU.Context = "Source: OS process status"
+	}
+
+	// gpu
+	gpuCount, deviceInfo := getGPUInfo()
+	if gpuCount > 0 {
+		node.Resources.GPU = &types.SimpleMeasurement{
+			Value: float64(gpuCount),
+			Context: deviceInfo,
+		}
 	}
 
 	return node
@@ -147,17 +153,32 @@ func getCGroupsFile(path string) (val float64, wr bool, info string) {
 }
 
 
-func printGPUInfo() {
+
+
+func getGPUInfo() (val int, info string) {
 
 	gpu, err := ghw.GPU()
-	if err != nil {
+	if err != nil || gpu == nil ||  gpu.GraphicsCards == nil {
 		log.Printf("Error getting GPU info: %v", err)
-		return
+		return 0, ""
 	}
 
-	log.Printf("%v\n", gpu)
+	num := len(gpu.GraphicsCards)
+	infos := make([]string, 0)
+
+	/*
+		device[0]: 0000:00:04.0 ->
+			class: 'Display controller'
+			vendor: 'NVIDIA Corporation'
+			product: 'GP100GL [Tesla P100 PCIe 16GB]'"
+	*/
 
 	for _, card := range gpu.GraphicsCards {
 		log.Printf(" %v\n", card)
+		infos = append(infos, fmt.Sprintf("gpu[%d]: %s - %+v",
+			card.Index, card.DeviceInfo.Vendor.Name, card.DeviceInfo.Product))
 	}
+
+	return num, strings.Join(infos, "; ")
+
 }

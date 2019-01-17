@@ -24,3 +24,6 @@ deploy:
 
 deploy-test:
 	kubectl apply -f deployments/tellmeall-test.yaml
+
+install-gpu-drivers:
+	kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/ubuntu/daemonset-preloaded.yaml
