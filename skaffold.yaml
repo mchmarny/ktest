@@ -8,7 +8,7 @@ build:
       image: gcr.io/s9-demo/tellmeall
   local:
     push: true
-    useDockerCLI: true
+    useDockerCLI: false
 deploy:
   kubectl:
     manifests:
