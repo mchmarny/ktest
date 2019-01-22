@@ -51,7 +51,7 @@ curl -s https://tellmeall.demo.knative.tech/req |  jq '.envs.RELEASE'
 Or to get your `user-agent` as seen by the Knative service
 
 ```shell
-curl -s https://tellmeall.demo.knative.tech/req |  jq '.envs.user-agent'
+curl -s https://tellmeall.demo.knative.tech/req |  jq '.head."user-agent"'
 ```
 
 ### `/node` (Serving Node)
@@ -59,7 +59,7 @@ curl -s https://tellmeall.demo.knative.tech/req |  jq '.envs.user-agent'
 The `/node` endpoint provides information about the node which is serving your request. For example to see the boot time of that node and its hostname
 
 ```shell
-curl -s https://tellmeall.demo.knative.tech/node |  jq '.info.bootTs,.info.hostname'
+curl -s https://tellmeall.demo.knative.tech/res |  jq '.node.bootTs,.meta.host'
 ```
 
 ### `/kn` (Knative)
