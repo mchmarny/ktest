@@ -21,8 +21,9 @@ spec:
               limits:
                 memory: "1Gi"
                 cpu: "1"
+                # nvidia.com/gpu: 1
             env:
             - name: RELEASE
-              value: "v0.5.29"
+              value: "v0.5.30"
             - name: LOG_TO_FILE
               value: "yes"
