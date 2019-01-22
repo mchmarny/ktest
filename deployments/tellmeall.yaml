@@ -10,8 +10,6 @@ spec:
         metadata:
           labels:
             demo: tellmeall
-          annotations:
-            autoscaling.knative.dev/minScale: "1"
         spec:
           container:
             image: gcr.io/knative-samples/tellmeall:latest
@@ -25,6 +23,6 @@ spec:
                 cpu: "1"
             env:
             - name: RELEASE
-              value: "v0.5.28"
+              value: "v0.5.29"
             - name: LOG_TO_FILE
               value: "yes"
