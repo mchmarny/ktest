@@ -18,10 +18,10 @@ spec:
               requests:
                 memory: "128Mi"
                 cpu: "0.5"
+                nvidia.com/gpu: 1
               limits:
                 memory: "1Gi"
                 cpu: "1"
-                # nvidia.com/gpu: 1
             env:
             - name: RELEASE
               value: "v0.5.30"
