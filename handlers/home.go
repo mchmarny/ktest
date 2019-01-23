@@ -5,13 +5,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mchmarny/tellmeall/utils"
+	"github.com/mchmarny/ktest/utils"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := map[string]string{
-		"name":    "tellmeall",
+		"name":    "ktest",
 		"on":      time.Now().String(),
 		"version": utils.MustGetEnv("RELEASE", "RELEASE not set"),
 	}

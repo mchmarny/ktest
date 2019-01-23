@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/mchmarny/tellmeall/types"
+	"github.com/mchmarny/ktest/types"
 )
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {

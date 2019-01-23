@@ -15,8 +15,8 @@ import (
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/host"
 
-	"github.com/mchmarny/tellmeall/types"
-	"github.com/mchmarny/tellmeall/utils"
+	"github.com/mchmarny/ktest/types"
+	"github.com/mchmarny/ktest/utils"
 
 	"golang.org/x/sys/unix"
 

@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mchmarny/tellmeall/handlers"
-	"github.com/mchmarny/tellmeall/utils"
+	"github.com/mchmarny/ktest/handlers"
+	"github.com/mchmarny/ktest/utils"
 )
 
 func main() {

@@ -1,5 +1,5 @@
 GCP_PROJECT_NAME=knative-samples
-BINARY_NAME=tellmeall
+BINARY_NAME=ktest
 RELEASE_VERSION=0.6.2
 
 .PHONY: deps image policy
@@ -18,7 +18,7 @@ image:
 		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):latest .
 
 deploy:
-	kubectl apply -f https://raw.githubusercontent.com/mchmarny/tellmeall/master/deployments/tellmeall.yaml
+	kubectl apply -f https://raw.githubusercontent.com/mchmarny/ktest/master/deployments/ktest.yaml
 
 gpu:
 	kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/ubuntu/daemonset-preloaded.yaml

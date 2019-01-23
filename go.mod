@@ -1,4 +1,4 @@
-module github.com/mchmarny/tellmeall
+module github.com/mchmarny/ktest
 
 require (
 	github.com/StackExchange/wmi v0.0.0-20181212234831-e0a55b97c705 // indirect

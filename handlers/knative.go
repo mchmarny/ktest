@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/mchmarny/tellmeall/types"
+	"github.com/mchmarny/ktest/types"
 )
 
 const (

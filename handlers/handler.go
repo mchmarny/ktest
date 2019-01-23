@@ -9,8 +9,8 @@ import (
 	"net/http/httputil"
 	"time"
 
-	"github.com/mchmarny/tellmeall/types"
-	"github.com/mchmarny/tellmeall/utils"
+	"github.com/mchmarny/ktest/types"
+	"github.com/mchmarny/ktest/utils"
 )
 
 var (

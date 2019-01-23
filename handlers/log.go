@@ -46,7 +46,7 @@ func logHandler(w http.ResponseWriter, r *http.Request) {
 	// gt log path
 	path := r.URL.Query().Get("logpath")
 	if path == "" {
-		fmt.Fprintf(w, "The `logpath` parameter required (e.g. /log?logpath=/var/log/tellmeall.log)\n")
+		fmt.Fprintf(w, "The `logpath` parameter required (e.g. /log?logpath=/var/log/ktest.log)\n")
 		fmt.Fprintf(w, "Supported log locations:\n")
 		for _, p := range supportedLogPaths {
 			fmt.Fprintf(w, "   %s/*\n", p)

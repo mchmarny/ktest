@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	logFilePath   = "/var/log/tellmeall.log"
+	logFilePath   = "/var/log/ktest.log"
 	logToFileFlag = "LOG_TO_FILE"
-	logPrefix     = "tellmeall: "
+	logPrefix     = "ktest: "
 )
 
 var (
