@@ -1,6 +1,6 @@
 GCP_PROJECT_NAME=knative-samples
 BINARY_NAME=tellmeall
-RELEASE_VERSION=0.6.1
+RELEASE_VERSION=0.6.2
 
 .PHONY: deps image policy
 
