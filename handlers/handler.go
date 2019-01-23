@@ -32,25 +32,24 @@ func InitHandlers(mux *http.ServeMux) {
 		http.FileServer(http.Dir("static"))))
 
 	// routes
-	mux.HandleFunc("/", withLog(homeHandler))
-	mux.HandleFunc("/req", withLog(requestHandler))
-	mux.HandleFunc("/res", withLog(resourceHandler))
-	mux.HandleFunc("/kn", withLog(knativeHandler))
-	mux.HandleFunc("/log", withLog(logHandler))
+	mux.HandleFunc("/", withRequestLog(homeHandler))
+	mux.HandleFunc("/req", withRequestLog(requestHandler))
+	mux.HandleFunc("/res", withRequestLog(resourceHandler))
+	mux.HandleFunc("/kn", withRequestLog(knativeHandler))
+	mux.HandleFunc("/log", withRequestLog(logHandler))
 
 	// health (Istio and other)
 	mux.HandleFunc("/_healthz", func(w http.ResponseWriter, _ *http.Request) {
 		fmt.Fprint(w, "ok")
 	})
-	mux.HandleFunc("/_health", func(w http.ResponseWriter, _ *http.Request) {
-		fmt.Fprint(w, "ok")
-	})
 
 }
 
-// withLog is a simple midleware to dump each request into log
-func withLog(next http.HandlerFunc) http.HandlerFunc {
+// withRequestLog is a simple midleware to dump each request into log
+func withRequestLog(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		notCache(w)
 
 		reqDump, err := httputil.DumpRequest(r, true)
 		if err != nil {
@@ -82,4 +81,10 @@ func writeJSON(w http.ResponseWriter, o interface{}) {
 	e.SetIndent("", "\t")
 	e.Encode(o)
 
+}
+
+func notCache(w http.ResponseWriter) {
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
 }
