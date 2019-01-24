@@ -1,8 +1,8 @@
 GCP_PROJECT_NAME=knative-samples
 BINARY_NAME=ktest
-RELEASE_VERSION=0.6.2
+RELEASE_VERSION=0.6
 
-.PHONY: deps image policy
+.PHONY: deps image
 
 all: test
 
@@ -22,13 +22,6 @@ deploy:
 
 gpu:
 	kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/ubuntu/daemonset-preloaded.yaml
-
-policy:
-	PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
-	gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
-    	--member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
-    	--role=roles/container.developer
-
 
 submit:
 	gcloud builds submit \
