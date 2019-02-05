@@ -16,6 +16,10 @@ image:
 	gcloud builds submit --project=$(GCP_PROJECT_NAME) \
 		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):latest .
 
+redeploy:
+	kubectl delete -f deployments/service.yaml
+	kubectl apply -f deployments/service.yaml
+
 deploy:
 	kubectl apply -f deployments/service.yaml
 

@@ -24,6 +24,6 @@ spec:
                 nvidia.com/gpu: 1
             env:
             - name: RELEASE
-              value: "v0.6.4"
+              value: "v0.6.5"
             - name: LOG_TO_FILE
               value: "yes"
