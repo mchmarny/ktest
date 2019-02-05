@@ -13,7 +13,7 @@ deps:
 	go mod tidy tag submit
 
 image:
-	time gcloud builds submit --project=$(GCP_PROJECT_NAME) \
+	gcloud builds submit --project=$(GCP_PROJECT_NAME) \
 		--tag gcr.io/$(GCP_PROJECT_NAME)/$(BINARY_NAME):latest .
 
 deploy:
