@@ -11,7 +11,7 @@ https://ktest.demo.knative.tech/
 ## Deploy
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/mchmarny/ktest/master/deployments/ktest.yaml
+kubectl apply -f https://raw.githubusercontent.com/mchmarny/ktest/master/deployments/service.yaml
 ```
 
 After deployment, the `ktest` application will expose the following endpoints:
