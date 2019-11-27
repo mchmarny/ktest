@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// const for file sizes
 const (
 	BYTE = 1 << (10 * iota)
 	KILOBYTE
