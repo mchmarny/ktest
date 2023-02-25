@@ -24,7 +24,8 @@ github.com/shirou/gopsutil/net
 github.com/shirou/gopsutil/process
 # github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4
 github.com/shirou/w32
-# golang.org/x/sys v0.0.0-20191126131656-8a8471f7e56d
+# golang.org/x/sys v0.1.0
+golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # gopkg.in/yaml.v2 v2.2.2
