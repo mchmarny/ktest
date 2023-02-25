@@ -10,5 +10,5 @@ require (
 	github.com/shirou/gopsutil v2.19.10+incompatible
 	github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
-	golang.org/x/sys v0.0.0-20191126131656-8a8471f7e56d
+	golang.org/x/sys v0.1.0
 )
